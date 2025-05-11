@@ -3,8 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 
 # --- Config ---
-html_path = r"C:\Users\hp\Desktop\sem8\genAI\proj\webpages-deviant\1.html"
-save_dir = r"C:\Users\hp\Desktop\sem8\genAI\proj\ghibli\finetuning-data\deviant"
+html_path = r"webpages-deviant\1.html"
+save_dir = r"ghibli\finetuning-data\deviant"
 os.makedirs(save_dir, exist_ok=True)
 
 # --- Load and parse HTML ---
