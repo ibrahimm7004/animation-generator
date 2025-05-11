@@ -7,9 +7,9 @@ from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # --- Configuration ---
-CHROMEDRIVER_PATH = r"C:\Users\hp\Desktop\sem8\genAI\proj\chromedriver-win64\chromedriver.exe"
+CHROMEDRIVER_PATH = r"chromedriver-win64\chromedriver.exe"
 TARGET_URL = "https://www.artstation.com/search?sort_by=relevance&query=studio%20ghibli&=&category_ids_include=37,13,30,67"
-SAVE_DIR = r"C:\Users\hp\Desktop\sem8\genAI\proj\ghibli\finetuning-data\art-station\2"
+SAVE_DIR = r"ghibli\finetuning-data\art-station\2"
 SCROLL_PAUSE_TIME = 2
 MAX_SCROLLS = 15
 
