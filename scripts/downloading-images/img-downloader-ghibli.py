@@ -5,11 +5,11 @@ from urllib.parse import urljoin
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # --- Configuration ---
-SAVE_DIR = r"C:\Users\hp\Desktop\sem8\genAI\proj\ghibli\finetuning-data"
+SAVE_DIR = r"ghibli\finetuning-data"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
 }
-MAX_WORKERS = 8  # You can increase this to 16 or 32 if you have good bandwidth and CPU
+MAX_WORKERS = 8
 
 
 def fetch_page_image_links(page_url: str):
