@@ -35,7 +35,133 @@ This project is an AI-powered animation generator that creates frame-by-frame, G
 
 ---
 
-## 🧪 How It Works
+## 🎨 Ghibli-Style Animation Generator: Fine-Tuning & Image Generation with LoRA
+
+This section provides a deep dive into how this project leverages **Stable Diffusion**, **LoRA fine-tuning**, and **ControlNet** to produce stylistically consistent Ghibli-themed animation frames from user prompts.
+
+---
+
+### 🌍 Base Model Setup: Stable Diffusion v1.5
+
+We start with the `runwayml/stable-diffusion-v1-5` model as the base for all image generation tasks:
+
+```python
+from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
+
+pipe = StableDiffusionPipeline.from_pretrained(
+    "runwayml/stable-diffusion-v1-5",
+    safety_checker=None,
+    torch_dtype=torch.float16
+)
+pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+pipe.to("cuda")
+```
+
+This pipeline is later enhanced using **LoRA fine-tuned weights** to give it a distinct Ghibli-style output capability.
+
+---
+
+### 🔧 LoRA Fine-Tuning: Tailoring SD to Ghibli Style
+
+LoRA (Low-Rank Adaptation) allows efficient fine-tuning of large diffusion models by injecting small trainable matrices into attention layers. Instead of modifying the entire UNet weights, LoRA adjusts only a small subset of parameters, significantly reducing compute requirements.
+
+#### 📁 Dataset Preparation & Upload
+
+1. Captioned images are paired in a CSV (`metadata.csv`).
+2. Images + captions are wrapped as a Hugging Face `datasets.Dataset` and pushed to the Hub:
+
+```python
+from datasets import Dataset, Image
+
+# DataFrame setup
+df["image"] = df["file_name"].apply(lambda fn: os.path.join(image_folder, fn))
+ds = Dataset.from_pandas(df).cast_column("image", Image())
+ds.push_to_hub("ibrahim7004/lora-ghibli-images", split="train")
+```
+
+#### 🎓 Fine-Tuning Execution
+
+Using Hugging Face's `train_text_to_image_lora.py`, the model is fine-tuned with custom captions:
+
+```bash
+accelerate launch train_text_to_image_lora.py \
+  --pretrained_model_name_or_path="runwayml/stable-diffusion-v1-5" \
+  --dataset_name="ibrahim7004/lora-ghibli-images" \
+  --caption_column="caption" \
+  ...
+  --output_dir="./finetune_lora/ghibli"
+```
+
+Training runs for 3000 steps, saving LoRA weights as `pytorch_lora_weights.safetensors`.
+
+#### 🔄 Loading LoRA Weights
+
+Once trained, the model is reloaded with LoRA weights like so:
+
+```python
+lora_path = hf_hub_download(repo_id="ibrahim7004/ghibli-stableDiff-finetuned", filename="v2_pytorch_lora_weights.safetensors")
+pipe.unet.load_attn_procs(lora_path)
+```
+
+---
+
+### 📸 Image Generation: Frame-by-Frame
+
+The animation generation process consists of two parts:
+
+- **Frame 0**: Generated from scratch via text-to-image
+- **Frame 1 onward**: Generated using img2img with ControlNet for frame consistency
+
+```python
+if idx == 0:
+    image = pipe(prompt=frame, ...).images[0]
+else:
+    refined = img2img_pipe(
+        prompt=frame,
+        image=saved_image,
+        control_image=get_depth_map(saved_image),
+        ...
+    ).images[0]
+```
+
+#### 🔮 ControlNet (Depth)
+
+To maintain visual continuity, we use `lllyasviel/sd-controlnet-depth`:
+
+```python
+controlnet = ControlNetModel.from_pretrained("lllyasviel/sd-controlnet-depth")
+img2img_pipe = StableDiffusionControlNetImg2ImgPipeline.from_pretrained(
+    base_model,
+    controlnet=controlnet,
+    ...
+)
+```
+
+A simple grayscale depth map is generated from the last frame:
+
+```python
+def get_depth_map(image_pil):
+    gray = cv2.cvtColor(np.array(image_pil), cv2.COLOR_RGB2GRAY)
+    depth = cv2.normalize(gray, None, 0, 255, cv2.NORM_MINMAX)
+    return Image.fromarray(depth).convert("RGB")
+```
+
+---
+
+### 🎥 Animation Compilation
+
+All saved frames (as `frame_0.png`, `frame_1.png`, ...) are stitched into a GIF for easy preview:
+
+```python
+def create_gif_from_frames(folder_path="/content/frames", output_path="/content/animation.gif"):
+    frames = [Image.open(...)]
+    frames[0].save(output_path, format="GIF", save_all=True, append_images=frames[1:], loop=0)
+    display(IPyImage(filename=output_path))
+```
+
+---
+
+## 🧪 How the entire pipeline Works
 
 ### 1. Prompt Breakdown (LLM)
 
