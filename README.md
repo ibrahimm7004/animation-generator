@@ -1,4 +1,4 @@
-# 🌿 Ghibli-Style Animation Generator 🎨✨
+# Ghibli-Style Animation Generator
 
 This project is an AI-powered animation generator that creates frame-by-frame, Ghibli-style animations from natural language prompts. Using a combination of OpenAI GPT models, Stable Diffusion pipelines (txt2img, img2img), and ControlNet, the system produces coherent and stylized animated sequences in the spirit of Studio Ghibli’s visual aesthetic.
 
