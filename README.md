@@ -28,7 +28,7 @@ This project is an AI-powered animation generator that creates frame-by-frame, G
 
 - **Python**
 - **Stable Diffusion v1.5** (`diffusers`)
-- **OpenAI GPT / Mistral-7B-Instruct (via HF)**
+- **Mistral-7B-Instruct (via HF)**
 - **ControlNet (Depth)**
 - **LoRA fine-tuning**
 - **Pillow**, **OpenCV**, **Torch**, **Transformers**
