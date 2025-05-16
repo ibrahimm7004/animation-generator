@@ -6,7 +6,10 @@ This project is an AI-powered animation generator that creates frame-by-frame, G
 
 ### 🎞️ Sample Output
 
-![ghibli animation](static/animation.gif)
+![ghibli animation](static/animation-1.gif)
+![ghibli animation](static/animation-2.gif)
+![ghibli animation](static/animation-3.gif)
+![ghibli animation](static/animation-4.gif)
 
 ---
 
