@@ -4,6 +4,12 @@ This project is an AI-powered animation generator that creates frame-by-frame, G
 
 ---
 
+### 🎞️ Sample Output
+
+![ghibli animation](static/animation.gif)
+
+---
+
 ## 🚀 Features
 
 - 🎬 **Natural Prompt to Animation**: Enter a single prompt (e.g. “a serene forest at dawn...”) and receive a full animation sequence.
