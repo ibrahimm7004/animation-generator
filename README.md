@@ -251,17 +251,16 @@ def create_gif_from_frames(folder_path="/content/frames", output_path="/content/
 
 The Ghibli visual style was enhanced using a manually curated and captioned dataset of Ghibli-style image-caption pairs:
 
-- 🔗 **Final dataset**: [ghibli-images-for-SD1.5](https://huggingface.co/datasets/ibrahim7004/ghibli-images-for-SD1.5)
-- ➡️ [Download LoRA weights (Ghibli Refined)](./finetuning-v3%20[ghibli-refined]/pytorch_lora_weights.safetensors)
-- 📘 [View full LoRA finetuning code (Studio Ghibli Dataset)](./finetuning-v2%20[studio-ghibli]/stable-diffusion-finetuning-ghibli.ipynb)
+🔗 **Final dataset**: [ghibli-images-for-SD1.5](https://huggingface.co/datasets/ibrahim7004/ghibli-images-for-SD1.5)
+➡️ [Download LoRA weights (Ghibli Refined)](./finetuning-v3%20[ghibli-refined]/pytorch_lora_weights.safetensors)
+📘 [View full LoRA finetuning code (Studio Ghibli Dataset)](./finetuning-v2%20[studio-ghibli]/stable-diffusion-finetuning-ghibli.ipynb)
 
 📂 Dataset: 50 images with captions manually written using ChatGPT assistance for consistency
 
 🧪 Earlier experiments:
 
-- [lora-ghibli-images](https://huggingface.co/datasets/ibrahim7004/lora-ghibli-images)
-- [lora-pak-truck-art](https://huggingface.co/datasets/ibrahim7004/lora-pak-truck-art)
-  C:\Users\hp\Desktop\projects\animation-generator\finetuning-v1 [pak-truck-art]
+[lora-ghibli-images](https://huggingface.co/datasets/ibrahim7004/lora-ghibli-images)
+[lora-pak-truck-art](https://huggingface.co/datasets/ibrahim7004/lora-pak-truck-art)
 
 Used for fine-tuning LoRA weights applied to the Stable Diffusion UNet.
 
