@@ -310,9 +310,3 @@ create_gif_from_frames()
 ```
 
 ---
-
-## 📬 Contact
-
-Created by [@ibrahim7004](https://huggingface.co/ibrahim7004) | Powered by 🤗 + 🎨 + 💻
-
-Let me know if you want to integrate frame interpolation or music generation next!
